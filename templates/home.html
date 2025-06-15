@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Homepage{% endblock title %}
+
+{% block main %}
+
+    {% if tasks %}
+        <ul class='task-list'>
+            {% for task in tasks %}
+                <li class='task-list-item'>
+                    <p class="task-title" style="{% if task.is_complete %}text-decoration:line-through;{% endif %}">
+                        {{task.title}}
+                    </p>
+
+                    <div class="task-actions">
+                        <a href="{% url "task_detail" task.pk%}"><i class="bi bi-eye"></i></a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock main %}
