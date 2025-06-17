@@ -1,3 +1,21 @@
+/* #region variables */
+:root {
+    --neutral-dark: #35393C;
+    --neutral-light: #f7fff8;
+    --primary-lighter: #c7e6bf;
+    --primary-light: #63cca0;
+    --primary-dark: #397367;
+    --secondary-light: #F9B4ED;
+    --secondary-dark: #E574BC;
+
+    --font-size-lg: 2.5rem;
+    --font-size-md: 2rem;
+    --fornt-size-sm: 1.5rem;
+}
+
+/* #endregion variables */
+
+/* #region cssreset */
 /* 1. Use a more-intuitive box-sizing model */
 *,
 *::before,
@@ -10,18 +28,100 @@
     margin: 0;
 }
 
-:root {
-    --neutral-dark: #35393C;
-    --neutral-light: #e2e8ec;
-    --primary-lighter: #c7e6bf;
-    --primary-light: #63CCCA;
-    --primary-dark: #397367;
-    --secondary-light: #F9B4ED;
-    --secondary-dark: #E574BC;
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
 
-    --font-size-lg: 2.5rem;
-    --font-size-md: 2rem;
-    --fornt-size-sm: 1.5rem;
+body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    /* font-family: inherit;
+    font-size: inherit; */
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/*
+10. Create a root stacking context
+*/
+#root,
+#__next {
+    isolation: isolate;
+}
+
+/* #endregion cssreset */
+
+.flex-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.btn {
+    border: none;
+    padding: 0.5rem;
+    border-radius: 10px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.btn-primary {
+    background-color: var(--primary-light);
+
+    &:hover {
+        background-color: var(--primary-dark);
+        color: var(--primary-lighter);
+    }
 }
 
 body {
@@ -39,6 +139,11 @@ body {
     min-height: 100dvh;
 
     font-size: var(--fornt-size-sm);
+    color: var(--neutral-dark);
+}
+
+h1 {
+    font-size: var(--font-size-md);
 }
 
 header {
@@ -60,6 +165,7 @@ main {
     max-width: 750px;
     padding: 10px;
     border: solid 5px var(--primary-dark);
+    background-color: var(--neutral-light);
     border-radius: 20px;
     margin: auto;
 }
@@ -67,7 +173,7 @@ main {
 nav {
     display: flex;
     flex-direction: row;
-
+    color: var(--neutral-light);
     width: 100%;
     padding-inline: 2rem;
 }
@@ -79,7 +185,7 @@ nav ul a {
     &:hover {
         text-decoration: none;
 
-        color: var(--secondary-light);
+        color: var(--primary-light);
     }
 }
 
@@ -87,7 +193,7 @@ nav ul a {
     justify-content: flex-start;
     font-size: var(--font-size-lg);
     font-weight: bold;
-    color: var(--primary-light);
+    color: var(--neutral-light);
     text-decoration: none;
 
     &:hover {
@@ -114,12 +220,108 @@ nav ul a {
 .task-list-item {
     display: flex;
     place-items: center space-between;
+    padding: 1rem;
+    border-radius: 10px;
+
 }
 
 .task-title {
     flex: 1;
 }
 
+.task-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.task-actions a {
+    color: var(--primary-dark);
+}
+
 footer {
     grid-area: foot;
+}
+
+.simple-form {
+    max-width: 70%;
+    margin: auto;
+    display: grid;
+    gap: 1rem;
+    margin-block: 2rem;
+
+    & div {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        align-items: center;
+    }
+
+    & input {
+        border-radius: 10px;
+        border: 5px solid var(--primary-light);
+    }
+
+    & button {
+        padding: 0.5rem;
+        border-radius: 10px;
+        /* border: 5px solid var(--primary-dark); */
+        background-color: var(--primary-light);
+        border: none;
+        /* color: var(--neutral-dark); */
+        /* border: 5px solid var(--neutral-dark); */
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+#logout-form button {
+    background-color: var(--neutral-dark);
+    color: var(--neutral-light);
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+        color: var(--primary-light);
+    }
+}
+
+input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+}
+
+.update-form {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    & #id_is_complete {
+        grid-area: 1 / 1 / 1 / 1;
+        align-self: center;
+    }
+
+    & #id_title {
+        grid-area: 1 / 2 / 1 / -1;
+        border-radius: 10px;
+        border: 5px solid var(--primary-light);
+        padding: 0.5rem;
+    }
+
+    & #update-submit {
+        grid-area: 2 / 2 / 2 / 5;
+        background-color: var(--primary-light);
+        border-radius: 10px;
+        border: none;
+        padding: 0.5rem;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }

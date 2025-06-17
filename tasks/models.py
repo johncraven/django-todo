@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -12,3 +13,6 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title if len(self.title) < 31 else self.title[:30] + "..."
+
+    def get_absolute_url(self):
+        return reverse("task_detail", kwargs={"pk": self.pk})

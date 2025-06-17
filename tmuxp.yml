@@ -1,13 +1,13 @@
 session_name: my-django-sesh
 windows:
   - window_name: django-server
-    layout: main-vertical
+    layout: even-vertical
     panes:
-      - uv run manage.py shell
       - uv run manage.py livereload
       - uv run manage.py runserver
   - window_name: sqlite
     panes:
       - sqlite3 db.sqlite3
   - window_name: chat
-    panes: llm chat
+    panes:
+      - llm chat
