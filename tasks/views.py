@@ -1,13 +1,16 @@
+# tasks/views.py
 from django.shortcuts import render
 from django.views.generic import DetailView, DeleteView, UpdateView, CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from .models import Task
 from .forms import TaskUpdateForm
 
 
+@login_required
 def homepage_view(request):
-    tasks = Task.objects.all().order_by("is_complete")
+    tasks = Task.objects.filter(author=request.user).order_by("is_complete")
     return render(
         request,
         template_name="home.html",
