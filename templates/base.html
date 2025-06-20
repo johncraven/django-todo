@@ -1,7 +1,4 @@
 {% load static %}
-{% load livereload_tags %}
-{% livereload_script %}
-
 
 <head>
     <title>{% block title %}Base Page{% endblock title %}</title>
@@ -17,7 +14,7 @@
             <div id="logo">
                 <a href="{% url "home" %}">
                     <i class="bi bi-list-check"></i>
-                    Tasks
+                    Django To-Do
                 </a></div>
             <ul class="navlinks">
                 {% if user.is_authenticated %}

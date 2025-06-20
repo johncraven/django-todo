@@ -3,11 +3,11 @@ windows:
   - window_name: django-server
     layout: even-vertical
     panes:
-      - uv run manage.py livereload
       - uv run manage.py runserver
+      - uv run manage.py shell
   - window_name: sqlite
     panes:
       - sqlite3 db.sqlite3
-  - window_name: chat
+  - window_name: launch-browser
     panes:
-      - llm chat
+      - sleep 1 && firefox --new-window http://localhost:8000
