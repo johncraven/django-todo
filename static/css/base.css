@@ -10,7 +10,7 @@
 
     --font-size-lg: 2.5rem;
     --font-size-md: 2rem;
-    --fornt-size-sm: 1.5rem;
+    --font-size-sm: 1.5rem;
 }
 
 /* #endregion variables */
@@ -103,11 +103,12 @@ h6 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .btn {
     border: none;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 10px;
 
     &:hover {
@@ -138,7 +139,7 @@ body {
     min-height: 100vh;
     min-height: 100dvh;
 
-    font-size: var(--fornt-size-sm);
+    font-size: var(--font-size-sm);
     color: var(--neutral-dark);
 }
 
@@ -157,8 +158,9 @@ header {
 main {
     grid-area: main;
     background-color: var(--primary-lighter);
-    color: charcoal;
-    padding-top: 50px;
+    color: var(--neutral-dark);
+    padding-top: 2rem;
+    padding-inline: 1rem;
 }
 
 .main-container {
@@ -168,6 +170,12 @@ main {
     background-color: var(--neutral-light);
     border-radius: 20px;
     margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    min-height: 30vh;
 }
 
 nav {
@@ -220,8 +228,6 @@ nav ul a {
 .task-list-item {
     display: flex;
     place-items: center space-between;
-    padding: 1rem;
-    border-radius: 10px;
 
 }
 
@@ -325,4 +331,14 @@ input[type="checkbox"] {
             cursor: pointer;
         }
     }
+}
+
+form:has(#id_is_complete:checked) #id_title {
+    text-decoration: line-through;
+}
+
+a:focus,
+button:focus {
+    outline: 2px solid var(--primary-dark);
+    outline-offset: 2px;
 }
