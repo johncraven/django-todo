@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,17 +18,15 @@
         <nav>
             <div id="logo">
                 <a href="{% url "home" %}">
-                    <i class="bi bi-list-check"></i>
-                    Django To-Do
+                    To-Do
                 </a></div>
-            <ul class="navlinks">
+            <ul class="navlink-list">
                 {% if user.is_authenticated %}
-                <li>Hi, {{user.username}}</li>
-                <li><a href="#"><i class="bi bi-person"></i>Profile</a></li>
+                <li><a href="#" class="navlink">{{user.username}}</a></li>
                 <li>
                     <form id="logout-form" method="post" action="{% url "logout" %}">
                         {% csrf_token %}
-                        <button type="submit"><i class="bi bi-door-open"></i>Log Out</button>
+                        <button type="submit" class="navlink">Log Out</button>
                     </form>
                     {% comment %} <a href="{% url "logout" %}"><i class="bi bi-door-open"></i>Log Out</a> {% endcomment %}
                 </li>

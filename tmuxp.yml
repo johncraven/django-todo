@@ -1,13 +1,13 @@
 session_name: my-django-sesh
 windows:
   - window_name: django-server
-    layout: even-vertical
+    layout: even-horizontal
     panes:
       - uv run manage.py runserver
       - uv run manage.py shell
   - window_name: sqlite
     panes:
-      - sqlite3 db.sqlite3
+      - sqlite3 db.sqlite3 && .mode box
   - window_name: launch-browser
     panes:
       - sleep 1 && firefox --new-window http://localhost:8000

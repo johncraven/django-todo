@@ -5,9 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 from .models import Task
-from .forms import TaskUpdateForm
-
-#
+from .forms import TaskUpdateForm, TaskCreateForm
 
 
 @login_required
@@ -24,7 +22,7 @@ def homepage_view(request):
 
 class TaskCreate(CreateView):
     model = Task
-    fields = ["title"]
+    form_class = TaskCreateForm
     template_name = "task_new.html"
     success_url = reverse_lazy("home")
 

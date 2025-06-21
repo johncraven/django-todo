@@ -3,6 +3,49 @@
 {% block title %}View Task{% endblock title %}
 
 {% block main %}
-<p><strong>{{task.title}}</strong></p>
-<p>Complete? {{task.is_complete}}</p>
+<div class="container-header flex-between">
+    <h1>Task Detail</h1>
+    <a href="{% url "home" %}" class="btn bg-primary shadow-press clr-dark">
+        <i class="bi bi-arrow-left-square-fill"></i>  
+        Back
+    </a>
+</div>
+<div class="container-body">
+    <div class="task-item">
+        <div class="flex-between">
+            <a 
+                href="{% url "task_detail" task.pk %}" 
+                class="task-title" 
+                style="{% if task.is_complete %}text-decoration:line-through;{% endif %}">
+                <strong>
+                    {{task.title}}
+                    {% if task.priority == "3" %}(‼️)
+                    {% elif task.priority == "2" %}(❗️)
+                    {% endif %} 
+                </strong>
+            </a>
+
+            <div class="task-actions">
+                <a href="{% url "task_update" task.pk%}" class="bg-primary shadow-press ibtn" alt="update">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+                <a href="{% url "task_delete" task.pk%}" class="bg-secondary shadow-press ibtn" alt="delete">
+                    <i class="bi bi-trash-fill clr-neutraldark"></i>
+                </a>
+            </div>
+        </div>
+        <div class='fs-xs {% if task.is_past_due %}clr-secondarydark{% endif %}'>
+            {% if task.due_on %}
+                <i class="bi bi-calendar3"></i>
+                {{task.due_on|date:"d-M-y"}}
+                {% if task.is_past_due %}
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                {% endif %}
+            {% endif %}
+        </div>
+        <p class="task-description">
+            {{task.description}}
+        </p>
+    </div>
+</div>
 {% endblock main %}

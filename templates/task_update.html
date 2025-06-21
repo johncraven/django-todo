@@ -3,13 +3,35 @@
 {% block title %}Update Task{% endblock title %}
 
 {% block main %}
-<h1>Update task</h1>
-<form  class="update-form" action="" method="post">
-    {% csrf_token %}
-    <div>
-    {{form.is_complete}}
-    </div>
-    {{form.title}}
-    <button id="update-submit" type="submit">Update</button>
-</form>
+<div class="container-header">
+    <h1>Update task</h1>
+</div>
+
+
+<div class="container-body">
+    <form  class="form-grid" action="" method="post">
+        {% csrf_token %}
+        
+        <div class="flex col-span-2 align-end gap-2">
+            <div class="form-group">
+                {{form.is_complete}}
+            </div>
+            <div class="form-group grow">
+                {{form.title.label_tag}}
+                {{form.title}}
+            </div>
+        </div>
+
+        {% for field in form %}
+            {% if   field.name != "title" and field.name != "is_complete" %}
+            <div class="form-group {% if field.field.full_width %}col-span-2{% else %}col-span-1{% endif %}">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="col-span-2 bg-primary btn shadow-press">Submit</button>
+    </form>
+</div>
 {% endblock main %}
