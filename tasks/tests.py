@@ -49,11 +49,18 @@ class TodoTests(TestCase):
         cls.task = Task.objects.create(
             title="Test Task", author=cls.user1, is_complete=False
         )
+        cls.complex_task = Task.objects.create(
+            author=cls.user1,
+            title="Test Task 2",
+            description="This is the second task in my Test Data",
+            priority="1",
+            due_on="2025-01-01",
+        )
 
     def setUp(self):
         self.client.login(username="testuser", password="testpass")
 
-    def test_task_create(self):
+    def test_task_create_minimum_task(self):
         response = self.client.post(
             reverse("task_new"),
             {"title": "New Task"},
@@ -62,12 +69,12 @@ class TodoTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Task.objects.filter(title="New Task").exists())
 
-    def test_task_detail(self):
+    def test_task_detail_minimum_task(self):
         response = self.client.get(reverse("task_detail", args=[self.task.pk]))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.task.title)
 
-    def test_task_update(self):
+    def test_task_update_minimum_task(self):
         response = self.client.post(
             reverse("task_update", args=[self.task.pk]),
             {"title": "Updated Task", "is_complete": True},
@@ -77,9 +84,30 @@ class TodoTests(TestCase):
         self.task.refresh_from_db()
         self.assertEqual(self.task.title, "Updated Task")
 
-    def test_task_delete(self):
+    def test_task_delete_minimum_task(self):
         response = self.client.post(
             reverse("task_delete", args=[self.task.pk]), follow=True
         )
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Task.objects.filter(pk=self.task.pk).exists())
+
+    def test_task_create_complex_task(self):
+        response = self.client.post(
+            reverse("task_new"),
+            {
+                "title": "Complex Task",
+                "description": "Step 1: complete the task...",
+                "due_on": "2025-02-01",
+                "priority": "1",
+            },
+            follow=True,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(Task.objects.filter(title="Complex Task").exists())
+
+    def test_task_detail_complex_task(self):
+        response = self.client.get(reverse("task_detail", args=[self.complex_task.pk]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.complex_task.title)
+        self.assertContains(response, self.complex_task.description)
+        return

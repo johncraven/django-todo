@@ -21,8 +21,8 @@ class Task(models.Model):
         null=False, blank=True, choices=Priority.choices, default=Priority.LOW
     )
 
-    modified_on = models.DateField(auto_now=True)
-    created_on = models.DateField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title if len(self.title) < 31 else self.title[:30] + "..."
@@ -35,3 +35,15 @@ class Task(models.Model):
             return False
         else:
             return self.due_on < datetime.now().date()
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(
+        "users.CustomUser", on_delete=models.CASCADE, related_name="comments"
+    )
+    task = models.ForeignKey(
+        "tasks.Task", on_delete=models.CASCADE, related_name="comments"
+    )
+    body = models.TextField(null=False, blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)

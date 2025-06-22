@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}View Task{% endblock title %}
+{% load humanize %}
 
 {% block main %}
 <div class="container-header flex-between">
@@ -11,7 +12,7 @@
     </a>
 </div>
 <div class="container-body">
-    <div class="task-item">
+    <section class="task-item">
         <div class="flex-between">
             <a 
                 href="{% url "task_detail" task.pk %}" 
@@ -19,7 +20,7 @@
                 style="{% if task.is_complete %}text-decoration:line-through;{% endif %}">
                 <strong>
                     {{task.title}}
-                    {% if task.priority == "3" %}(‼️)
+                    {% if task.priority == "1" %}(‼️)
                     {% elif task.priority == "2" %}(❗️)
                     {% endif %} 
                 </strong>
@@ -46,6 +47,44 @@
         <p class="task-description">
             {{task.description}}
         </p>
-    </div>
+    </section>
+
+    <hr>
+    <section class="comments">
+        <h2 class="comments__header">
+                Comments
+        </h2>
+        <div class="comments__form">
+            <form action="" method="post" class="flex" name="comments_form">
+                {% csrf_token %}
+                <div class="form-group">
+                {{comment_form.body}}
+                </div>
+                {% comment %} <input type="submit" class="btn bg-primary shadow-press" style="align-self: stretch; flex:1;"> {% endcomment %}
+                <button type="submit" class="btn bg-primary shadow-press" style="align-self: stretch; flex:1;"><i class="bi bi-send-fill"></i></button>
+            </form>
+        </div>
+        {% if comments %}
+            <ul class="comments__list">
+            {% for comment in comments %}
+                <li class="comments__listitem">
+                    <div class="comment__content">
+                        <strong>{{comment.author.username}}</strong>
+                        : 
+                        {{comment.body}}
+                        <span class="fs-xxs">({{comment.created_on|naturaltime}})</span>
+                    </div>
+                    <div class="comment__actions">
+                        <form action="{% url "comment_delete" comment.pk %}" method="post" class="comment__deleteform">
+                            {% csrf_token %}
+                            <button type="submit"><i class="bi bi-trash-fill clr-neutraldark clr-secondary"></i></button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
 </div>
+
 {% endblock main %}

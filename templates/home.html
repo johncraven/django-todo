@@ -22,7 +22,7 @@
                                 style="{% if task.is_complete %}text-decoration:line-through;{% endif %}">
                                 <strong>
                                     {{task.title}}
-                                    {% if task.priority == "3" %}(‼️)
+                                    {% if task.priority == "1" %}(‼️)
                                     {% elif task.priority == "2" %}(❗️)
                                     {% endif %} 
                                 </strong>

@@ -14,6 +14,7 @@
     --font-size-md: 2rem;
     --font-size-sm: 1.5rem;
     --font-size-xsm: 1.2rem;
+    --font-size-xxsm: 0.8rem;
 }
 
 /* #endregion variables */
@@ -209,6 +210,9 @@ h1{
 
 .fs-xs{
     font-size: var(--font-size-xsm);
+}
+.fs-xxs{
+    font-size: var(--font-size-xxsm);
 }
 
 .fs-lg{
@@ -432,15 +436,14 @@ select {
     border-radius: 10px;
     background-color: white;
     border: 2px solid var(--neutral-dark);
-}
-
-input,
-textarea,
-select {
     cursor: pointer;
 }
 
+
+
 textarea {
+    height: 4.5rem;
+    padding: 1rem;
     max-height: 8rem;
     resize: none;
 }
@@ -469,3 +472,27 @@ input[type="checkbox"] {
 }
 
 /* #endregion Form Grid */
+
+/* #region Comments Section */
+.comments {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.comments__header {
+    font-size: var(--font-size-sm);
+}
+
+.comments_list{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.comments__listitem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* #endregion Comments Section */
