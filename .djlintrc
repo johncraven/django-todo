@@ -1,0 +1,8 @@
+{
+    "indent": 2,
+    "max_line_length": 80,
+    "format_attribute_template_tags": true,
+    "format_css": true,
+    "format_js": true,
+    "ignore": "H006,H030,H031"
+}

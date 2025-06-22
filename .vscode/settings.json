@@ -7,5 +7,19 @@
         "test*.py"
     ],
     "python.testing.pytestEnabled": false,
-    "python.testing.unittestEnabled": true
+    "python.testing.unittestEnabled": true,
+    "files.associations": {
+        "**/templates/**/*.html": "django-html",
+        "*.html": "django-html"
+    },
+    "[django-html]": {
+        "editor.defaultFormatter": "monosans.djlint",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+    },
+    "html.format.templating": true,
+    "html.format.indentHandlebars": true,
+    "html.format.wrapLineLength": 120,
+    "html.format.wrapAttributes": "auto",
 }

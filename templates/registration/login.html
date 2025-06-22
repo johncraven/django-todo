@@ -1,17 +1,16 @@
 {% extends "base.html" %}
-
-{% block title %}Sign in{% endblock title %}
-
+{% block title %}
+  Sign in
+{% endblock title %}
 {% block main %}
-<div class="container-header">
+  <div class="container-header">
     <h1>Log in</h1>
-</div>
-
-<div class="container-body">
-    <form  class="form-grid1" action="" method="post">
-        {% csrf_token %}
-        {{form}}
-        <button class= "btn bg-primary shadow-press" type="submit">Login</button>
+  </div>
+  <div class="container-body">
+    <form class="form-grid1" action="" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <button class="btn bg-primary shadow-press" type="submit">Login</button>
     </form>
-</div>
+  </div>
 {% endblock main %}

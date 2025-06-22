@@ -1,95 +1,95 @@
 {% extends "base.html" %}
-
-{% block title %}View Task{% endblock title %}
+{% block title %}
+    View Task
+{% endblock title %}
 {% load humanize %}
-
 {% block main %}
-<div class="container-header flex-between">
-    <h1>Task Detail</h1>
-    <a href="{% url "home" %}" class="btn bg-primary shadow-press clr-dark">
-        <i class="bi bi-arrow-left-square-fill"></i>  
-        Back
-    </a>
-</div>
-<div class="container-body">
-    <section class="task-item">
-        <div class="flex-between">
-            <a 
-                href="{% url "task_detail" task.pk %}" 
-                class="task-title" 
-                style="{% if task.is_complete %}text-decoration:line-through;{% endif %}">
-                <strong>
-                    {{task.title}}
-                    {% if task.priority == "1" %}(‼️)
-                    {% elif task.priority == "2" %}(❗️)
-                    {% endif %} 
-                </strong>
-            </a>
-
-            <div class="task-actions">
-                <a href="{% url "task_update" task.pk%}" class="bg-primary shadow-press ibtn" alt="update">
-                    <i class="bi bi-pencil-fill"></i>
+    <div class="container-header flex-between">
+        <h1>Task Detail</h1>
+        <a href="{% url "home" %}" class="btn bg-primary shadow-press clr-dark">
+            <i class="bi bi-arrow-left-square-fill"></i>
+            Back
+        </a>
+    </div>
+    <div class="container-body">
+        <section class="task-item">
+            <div class="flex-between">
+                <a href="{% url "task_detail" task.pk %}"
+                   class="task-title"
+                   style="{% if task.is_complete %}
+                              text-decoration:line-through;
+                          {% endif %}">
+                    <strong>
+                        {{ task.title }}
+                        {% if task.priority == "1" %}
+                            (‼️)
+                        {% elif task.priority == "2" %}
+                            (❗️)
+                        {% endif %}
+                    </strong>
                 </a>
-                <a href="{% url "task_delete" task.pk%}" class="bg-secondary shadow-press ibtn" alt="delete">
-                    <i class="bi bi-trash-fill clr-neutraldark"></i>
-                </a>
-            </div>
-        </div>
-        <div class='fs-xs {% if task.is_past_due %}clr-secondarydark{% endif %}'>
-            {% if task.due_on %}
-                <i class="bi bi-calendar3"></i>
-                {{task.due_on|date:"d-M-y"}}
-                {% if task.is_past_due %}
-                    <i class="bi bi-exclamation-triangle-fill"></i>
-                {% endif %}
-            {% endif %}
-        </div>
-        <p class="task-description">
-            {{task.description}}
-        </p>
-    </section>
-
-    <hr>
-    <section class="comments">
-        <h2 class="comments__header">
-                Comments
-        </h2>
-        <div class="comments__formcontainer">
-            <form action="" method="post" class="comments__form" name="comments_form">
-                {% csrf_token %}
-                <div class="form-group">
-                {{comment_form.body}}
+                <div class="task-actions">
+                    <a href="{% url "task_update" task.pk %}"
+                       class="bg-primary shadow-press ibtn"
+                       alt="update">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                    <a href="{% url "task_delete" task.pk %}"
+                       class="bg-secondary shadow-press ibtn"
+                       alt="delete">
+                        <i class="bi bi-trash-fill clr-neutraldark"></i>
+                    </a>
                 </div>
-                {% comment %} <input type="submit" class="btn bg-primary shadow-press" style="align-self: stretch; flex:1;"> {% endcomment %}
-                <button type="submit" class="btn bg-primary shadow-press" style="align-self: stretch; flex:1;"><i class="bi bi-send-fill"></i></button>
-            </form>
-        </div>
-        {% if comments %}
-            <ul class="comments__list">
-            {% for comment in comments %}
-                <li class="comments__listitem">
-                    <div class="comment__content">
-                        <strong>{{comment.author.username}}</strong>
-                        : 
-                        {{comment.body}}
-                        <span class="fs-xxs">({{comment.created_on|naturaltime}})</span>
-                    </div>
-                    <div class="comment__actions">
-                        <form action="{% url "comment_delete" comment.pk %}" method="post" class="comments__deleteform">
-                            {% csrf_token %}
-                            <div class="bg-secondary shadow-press ibtn">
-                                <button type="submit">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
+            </div>
+            <div class="fs-xs {% if task.is_past_due %}clr-secondarydark{% endif %}">
+                {% if task.due_on %}
+                    <i class="bi bi-calendar3"></i>
+                    {{ task.due_on|date:"d-M-y" }}
+                    {% if task.is_past_due %}
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <p class="task-description">{{ task.description }}</p>
+        </section>
+        <hr>
+        <section class="comments">
+            <h2 class="comments__header">Comments</h2>
+            <div class="comments__formcontainer">
+                <form action="" method="post" class="comments__form" name="comments_form">
+                    {% csrf_token %}
+                    <div class="form-group">{{ comment_form.body }}</div>
+                    <button type="submit" class="btn bg-primary shadow-press">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </form>
+            </div>
+            {% if comments %}
+                <ul class="comments__list">
+                    {% for comment in comments %}
+                        <li class="comments__listitem">
+                            <div class="comment__content">
+                                <strong>{{ comment.author.username }}</strong>
+                                :
+                                {{ comment.body }}
+                                <span class="fs-xxs">({{ comment.created_on|naturaltime }})</span>
                             </div>
-                        </form>
-                        
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    </section>
-</div>
-
+                            <div class="comment__actions">
+                                <form action="{% url "comment_delete" comment.pk %}"
+                                      method="post"
+                                      class="comments__deleteform">
+                                    {% csrf_token %}
+                                    <div class="bg-secondary shadow-press ibtn">
+                                        <button type="submit">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
+    </div>
 {% endblock main %}

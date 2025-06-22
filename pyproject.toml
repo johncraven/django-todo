@@ -11,4 +11,5 @@ dependencies = [
 [dependency-groups]
 dev = [
     "django-browser-reload>=1.18.0",
+    "djlint>=1.36.4",
 ]
