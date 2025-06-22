@@ -1,22 +1,25 @@
-{% extends "base.html" %} {% block title %}New Task{% endblock title %} {% block
-main %}
-<div class="container-header">
-  <h1>Create task</h1>
-</div>
-
-<div class="container-body">
-  <form class="form-grid" action="" method="post">
-    {% csrf_token %} {% for field in form %}
-    <div
-      class="form-group {% if field.field.full_width %}col-span-2{% else %}col-span-1{% endif %}"
-    >
-      {{ field.label_tag }} {{ field }}
-    </div>
-    {% endfor %}
-
-    <button type="submit" class="col-span-2 bg-primary btn shadow-press">
-      Submit
-    </button>
-  </form>
-</div>
+{% extends "base.html" %}
+{% block title %}
+  New Task
+{% endblock title %}
+{% block main %}
+  <div class="container-header">
+    <h1>Create task</h1>
+  </div>
+  <div class="container-body">
+    <form class="form-grid" action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group
+                    {% if field.field.full_width %}
+                      col-span-2
+                    {% else %}
+                      col-span-1
+                    {% endif %}">{{ field.label_tag }} {{ field }}</div>
+      {% endfor %}
+      <button type="submit" class="col-span-2 bg-primary btn shadow-press">
+        Submit
+      </button>
+    </form>
+  </div>
 {% endblock main %}

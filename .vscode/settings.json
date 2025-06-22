@@ -10,6 +10,7 @@
     "python.testing.unittestEnabled": true,
     "files.associations": {
         "**/templates/**/*.html": "django-html",
+        "**/templates/*.html": "django-html",
         "*.html": "django-html"
     },
     "[django-html]": {
@@ -17,6 +18,7 @@
         "editor.formatOnSave": true,
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
     },
     "html.format.templating": true,
     "html.format.indentHandlebars": true,

@@ -1,14 +1,18 @@
-{% extends "base.html" %} {% block title %}Sign up{% endblock title %} {% block
-main %}
-<div class="container-header">
-  <h1>Sign-up</h1>
-</div>
-<div class="container-body">
-  <form class="form-grid1" method="post">
-    {% csrf_token %} {% for field in form %}
-    <div class="form-group">{{field.label}} {{field}}</div>
-    {% endfor %}
-    <button type="submit" class="btn bg-primary shadow-press">Sign up</button>
-  </form>
-</div>
+{% extends "base.html" %}
+{% block title %}
+  Sign up
+{% endblock title %}
+{% block main %}
+  <div class="container-header">
+    <h1>Sign-up</h1>
+  </div>
+  <div class="container-body">
+    <form class="form-grid1" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">{{ field.label }} {{ field }}</div>
+      {% endfor %}
+      <button type="submit" class="btn bg-primary shadow-press">Sign up</button>
+    </form>
+  </div>
 {% endblock main %}
