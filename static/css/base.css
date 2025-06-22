@@ -415,6 +415,12 @@ hr {
 
 /* #region Form Grid */
 
+.form-grid1{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
 .form-grid {
     display: grid;
     grid-template-columns: 1fr;
