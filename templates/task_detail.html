@@ -54,8 +54,8 @@
         <h2 class="comments__header">
                 Comments
         </h2>
-        <div class="comments__form">
-            <form action="" method="post" class="flex" name="comments_form">
+        <div class="comments__formcontainer">
+            <form action="" method="post" class="comments__form" name="comments_form">
                 {% csrf_token %}
                 <div class="form-group">
                 {{comment_form.body}}
@@ -75,10 +75,15 @@
                         <span class="fs-xxs">({{comment.created_on|naturaltime}})</span>
                     </div>
                     <div class="comment__actions">
-                        <form action="{% url "comment_delete" comment.pk %}" method="post" class="comment__deleteform">
+                        <form action="{% url "comment_delete" comment.pk %}" method="post" class="comments__deleteform">
                             {% csrf_token %}
-                            <button type="submit"><i class="bi bi-trash-fill clr-neutraldark clr-secondary"></i></button>
+                            <div class="bg-secondary shadow-press ibtn">
+                                <button type="submit">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
                         </form>
+                        
                     </div>
                 </li>
             {% endfor %}

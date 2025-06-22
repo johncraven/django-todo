@@ -31,8 +31,8 @@
                     {% comment %} <a href="{% url "logout" %}"><i class="bi bi-door-open"></i>Log Out</a> {% endcomment %}
                 </li>
                 {% else %}
-                <li><a href="{% url "signup" %}"><i class="bi bi-envelope"></i>Sign up</a></li>
-                <li><a href="{% url "login" %}"><i class="bi bi-door-closed"></i>Log in</a></li>
+                <li><a href="{% url "signup" %}" class="navlink"><i class="bi bi-envelope"></i>Sign up</a></li>
+                <li><a href="{% url "login" %}" class="navlink"><i class="bi bi-door-closed"></i>Log in</a></li>
                 {% endif %}
             </ul>
         </nav>

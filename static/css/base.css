@@ -389,6 +389,15 @@ nav {
     flex-direction: row;
     align-items: center;    
     gap: 1rem;
+    opacity: 0;
+    transition: 0.3s ease
+}
+
+.task-item:focus .task-actions,
+.task-item:hover .task-actions,
+.task-list-item:hover .task-actions,
+.task-list-item:focus .task-actions{
+    opacity: 1;
 }
 
 .task-description {
@@ -483,6 +492,12 @@ input[type="checkbox"] {
     font-size: var(--font-size-sm);
 }
 
+.comments__form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
 .comments_list{
     display: flex;
     flex-direction: column;
@@ -493,6 +508,22 @@ input[type="checkbox"] {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.comment__actions {
+    /* visibility: hidden; */
+    opacity:0;
+    transition: 0.3s ease;
+}
+.comments__listitem:focus .comment__actions,
+.comments__listitem:hover .comment__actions {
+    /* visibility: visible; */
+    opacity: 1;
+}
+
+.comments__deleteform button{ 
+    background-color: transparent;
+    border: none;
 }
 
 /* #endregion Comments Section */
