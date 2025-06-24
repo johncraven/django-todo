@@ -16,11 +16,13 @@
         {% for task in tasks %}
           <li class="task-list-item" id="task-{{ task.pk }}">
             <div class="flex-between">
-              <a href="{% url "task_detail" task.pk %}"
-                 class="task-title"
-                 style="{% if task.is_complete %}
-                          text-decoration:line-through;
-                        {% endif %}">
+              <button id="toggle-task-{{ task.pk }}"
+                      class="ibtn shadow-press toggle-button
+                             {% if task.is_complete %}checked{% endif %}"
+                      data-task-pk="{{ task.pk }}">
+                <i class="bi bi-check"></i>
+              </button>
+              <a href="{% url "task_detail" task.pk %}" class="task-title">
                 <strong>
                   {{ task.title }}
                   {% if task.priority == "1" %}

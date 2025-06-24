@@ -138,3 +138,36 @@ document.querySelectorAll("[id^='comment-delete']").forEach(button => {
         btnConfirmDelete.addEventListener("click", deleteHandler)
     })
 })
+
+// Task toggle AJAX request
+document.querySelectorAll("[id^=toggle-task-]").forEach(button => {
+    let taskPk = button.dataset.taskPk
+    let isComplete
+    button.addEventListener("click", (event) => {
+        isComplete != button.classList.contains("checked")
+        fetch("api/task/" + taskPk + "/update_complete",
+            {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFTokenFromMeta()
+                },
+                body: {
+                    "pk": taskPk,
+                    "is_complete": isComplete
+                }
+            }
+        ).then(response => {
+            if (response.ok) {
+                console.log("Updated status for " + taskPk);
+                button.classList.toggle("checked");
+            } else {
+                console.log("Error updating task" + taskPk)
+            }
+        }).catch(error => {
+            console.log('Network Error: ', error)
+        })
+
+
+    })
+})

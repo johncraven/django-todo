@@ -26,7 +26,10 @@
         <div id="logo">
           <a href="{% url "home" %}">To-Do</a>
         </div>
-        <ul class="navlink-list">
+        <div id="navToggle" class="navlink ibtn">
+          <i class="bi bi-list"></i>
+        </div>
+        <ul class="navlink-list ">
           {% if user.is_authenticated %}
             <li>
               <a href="#" class="navlink">{{ user.username }}</a>
@@ -69,5 +72,11 @@
       </div>
     </main>
     <script src="{% static "js/base.js" %}"></script>
+    <script>
+        // show/hide nav items at small screen sizes
+        document.querySelector("#navToggle").addEventListener("click", (event) => {
+            document.querySelector(".navlink-list").classList.toggle("showNav")
+        })
+    </script>
   </body>
 </html>

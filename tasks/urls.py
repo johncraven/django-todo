@@ -10,4 +10,9 @@ urlpatterns = [
     path(
         "comment/<int:pk>/delete/", views.CommentDelete.as_view(), name="comment_delete"
     ),
+    path(
+        "api/task/<int:pk>/update_complete",
+        views.task_update_complete_api,
+        name="api_task_update_complete",
+    ),
 ]

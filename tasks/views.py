@@ -1,6 +1,8 @@
 # tasks/views.py
 from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 from django.views.generic import DetailView, DeleteView, UpdateView, CreateView
+from django.views.decorators.http import require_http_methods
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -77,6 +79,19 @@ class TaskUpdate(UpdateView, LoginRequiredMixin):
     template_name = "task_update.html"
     form_class = TaskUpdateForm
     success_url = reverse_lazy("home")
+
+
+@require_http_methods(["PATCH"])
+def task_update_complete_api(request, pk: int):
+    task = get_object_or_404(Task, pk=pk)
+    task.is_complete = not task.is_complete
+    task.save()
+    return JsonResponse(
+        {
+            "taskPk": task.pk,
+            "isComplete": task.is_complete,
+        }
+    )
 
 
 class CommentDelete(DeleteView):
