@@ -1,4 +1,4 @@
-// #REGION COMMON UTILITIES
+// #region COMMON UTILITIES
 
 // get CSRF token
 function getCSRFTokenFromMeta() {
@@ -32,6 +32,14 @@ btnCancelDelete.addEventListener("click", (event) => {
 
 let deleteHandler = null;
 let taskId = null;
+
+// #endregion COMMON UTILITIES
+
+
+// show/hide nav items at small screen sizes
+document.querySelector("#navToggle").addEventListener("click", (event) => {
+    document.querySelector(".navlink-list").classList.toggle("showNav")
+})
 
 // This will control AJAX deleting TASKS on the Homepage
 document.querySelectorAll("[id^='task-delete']").forEach(button => {
@@ -145,7 +153,7 @@ document.querySelectorAll("[id^=toggle-task-]").forEach(button => {
     let isComplete
     button.addEventListener("click", (event) => {
         isComplete != button.classList.contains("checked")
-        fetch("api/task/" + taskPk + "/update_complete",
+        fetch("/api/task/" + taskPk + "/update_complete",
             {
                 method: "PATCH",
                 headers: {

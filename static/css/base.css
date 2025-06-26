@@ -422,7 +422,8 @@ nav {
     text-decoration: none;
 }
 
-.task-list-item:has(button.checked) .task-title{
+.task-list-item:has(button.checked) .task-title,
+.task-item:has(button.checked) .task-title{
     text-decoration: line-through;
     text-decoration-thickness: 3px;
 

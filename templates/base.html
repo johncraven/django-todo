@@ -73,10 +73,14 @@
     </main>
     <script src="{% static "js/base.js" %}"></script>
     <script>
-        // show/hide nav items at small screen sizes
-        document.querySelector("#navToggle").addEventListener("click", (event) => {
-            document.querySelector(".navlink-list").classList.toggle("showNav")
-        })
+        const urlTemplates = {
+            'api_task_toggle': '{% url "api_task_update_complete" 999 %}'.replace('999', '{id}'),
+            'task_delete': '{% url "task_delete" 999 %}'.replace('999', '{id}'),
+        }
+
+        function getURLFromTemplate(template, id) {
+            return urlTemplates.replace("{id}", id)
+        }
     </script>
   </body>
 </html>
