@@ -147,7 +147,7 @@ document.querySelectorAll("[id^='comment-delete']").forEach(button => {
     })
 })
 
-// Task toggle AJAX request
+// This will control toggling the TASK status in DETAIL and LIST views
 document.querySelectorAll("[id^=toggle-task-]").forEach(button => {
     let taskPk = button.dataset.taskPk
     let isComplete

@@ -15,48 +15,46 @@
       <ul class="task-list">
         {% for task in tasks %}
           <li class="task-list-item" id="task-{{ task.pk }}">
-            <div class="flex-between">
+            <div class="task-list-item__status">
               <button id="toggle-task-{{ task.pk }}"
                       class="ibtn shadow-press toggle-button
                              {% if task.is_complete %}checked{% endif %}"
                       data-task-pk="{{ task.pk }}">
                 <i class="bi bi-check"></i>
               </button>
-              <a href="{% url "task_detail" task.pk %}" class="task-title">
-                <strong>
-                  {{ task.title }}
-                  {% if task.priority == "1" %}
-                    (‼️)
-                  {% elif task.priority == "2" %}
-                    (❗️)
-                  {% endif %}
-                </strong>
-              </a>
-              <div class="task-actions">
-                <a href="{% url "task_update" task.pk %}"
-                   class="bg-primary shadow-press ibtn"
-                   alt="update">
-                  <i class="bi bi-pencil-fill"></i>
-                </a>
-                <button id="task-delete-{{ task.pk }}"
-                        type="button"
-                        data-task-pk="{{ task.pk }}"
-                        class="bg-secondary shadow-press ibtn"
-                        alt="delete">
-                  <i class="bi bi-trash-fill clr-neutraldark"></i>
-                </button>
-              </div>
             </div>
-            <div class="fs-xs {% if task.is_past_due %}clr-secondarydark{% endif %}">
+            <a href="{% url "task_detail" task.pk %}" class="task-list-item__title">
+              <strong>
+                {{ task.title }}
+                {% if task.priority == "1" %}
+                  (‼️)
+                {% elif task.priority == "2" %}
+                  (❗️)
+                {% endif %}
+              </strong>
+            </a>
+            <div class="task-list-item__actions task-actions">
+              <a href="{% url "task_update" task.pk %}"
+                 class="bg-primary shadow-press ibtn"
+                 alt="update">
+                <i class="bi bi-pencil-fill"></i>
+              </a>
+              <button id="task-delete-{{ task.pk }}"
+                      type="button"
+                      data-task-pk="{{ task.pk }}"
+                      class="bg-secondary shadow-press ibtn"
+                      alt="delete">
+                <i class="bi bi-trash-fill clr-neutraldark"></i>
+              </button>
+            </div>
+            <p class="task-list-item__description">{{ task.description }}</p>
+            <div class="task-list-item__flags fs-xs
+                        {% if task.is_past_due %}clr-secondarydark{% endif %}">
               {% if task.due_on %}
                 <i class="bi bi-calendar3"></i>
-                {{ task.due_on|date:"d-M-y" }}
-                {% if task.is_past_due %}
-                  <i class="bi bi-exclamation-triangle-fill"></i>
-                {% endif %}
+                {{ task.due_on|date:"d M" }}
               {% endif %}
             </div>
-            <p class="task-description">{{ task.description }}</p>
           </li>
         {% endfor %}
       </ul>
