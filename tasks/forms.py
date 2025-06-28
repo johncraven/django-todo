@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Task
+from .models import Task, Comment
 
 
 class TaskCreateForm(forms.ModelForm):
@@ -36,3 +36,9 @@ class TaskUpdateForm(forms.ModelForm):
             "priority",
         ]
         widgets = {"due_on": forms.DateInput(attrs={"type": "date"})}
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["body"]

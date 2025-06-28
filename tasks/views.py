@@ -1,15 +1,15 @@
 # tasks/views.py
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.generic import DetailView, DeleteView, UpdateView, CreateView
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django import forms
+from django.core.exceptions import PermissionDenied
 
 from .models import Task, Comment
-from .forms import TaskUpdateForm, TaskCreateForm
+from .forms import TaskUpdateForm, TaskCreateForm, CommentForm
 
 
 @login_required
@@ -24,8 +24,11 @@ def homepage_view(request):
     )
 
 
+@login_required
 def task_detail_view(request, pk: int):
     task = get_object_or_404(Task, pk=pk)
+    if task.author != request.user:
+        raise PermissionDenied("you don't have permission to view this task")
 
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
@@ -48,10 +51,21 @@ def task_detail_view(request, pk: int):
     )
 
 
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ["body"]
+def task_create_view(request):
+    if request.method == "POST":
+        form = TaskCreateForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            return redirect("home")
+    else:
+        form = TaskCreateForm()
+    return render(
+        request=request,
+        template_name="task_new.html",
+        context={"form": form},
+    )
 
 
 class TaskCreate(CreateView, LoginRequiredMixin):
@@ -71,14 +85,22 @@ class TaskDelete(DeleteView, LoginRequiredMixin):
     template_name = "task_delete.html"
     success_url = reverse_lazy("home")
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if self.request.user != obj.author:
+            raise PermissionDenied("You don't have permission to update that task.")
+        return obj
 
-class TaskUpdate(UpdateView, LoginRequiredMixin):
+
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     context_object_name = "task"
-    # fields = ["title", "is_complete"]
     template_name = "task_update.html"
     form_class = TaskUpdateForm
     success_url = reverse_lazy("home")
+
+    def get_queryset(self):
+        return super().get_queryset().filter(author=self.request.user)
 
 
 @require_http_methods(["PATCH"])
