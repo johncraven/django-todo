@@ -1,6 +1,4 @@
 #!/bin/bash
 
-source ./config.sh
-
-echo "🗑️ Removing the resource group"
-az group delete --name $RG_NAME 
+echo "💣️ Starting the teardown"
+az resource list --resource-group rg-django-todo-dev --query "[].id" --output tsv | xargs -I {} az resource delete --ids {}

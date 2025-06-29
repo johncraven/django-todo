@@ -1,39 +1,18 @@
 #!/bin/bash
-set -e #Exit on any error
 
-source ./config.sh
+RG_NAME="rg-djang-todo-dev"
+LOCATION="eastus2"
+MANAGED_IDENTITY_NAME="django-todo-github-identity"
 
-echo "🚀 Deploying ${APP_NAME} to ${ENVIRONMENT}"
-
-# 1. Create/ensure resource group exists
+echo "📦️ Creating a new resource group if it doesn't exist"
 az group create --name $RG_NAME --location $LOCATION
 
-# 2. Deploy infrastructure
-echo "📦️ Deploying infrastructure..."
-DEPLOYMENT_OUTPUT=$(az deployment group create \
---resource-group $RG_NAME \
---template-file ./main.bicep \
---parameters appName=$APP_NAME environment=$ENVIRONMENT \
---query "properties.outputs" \
---output json)
+echo "🧑‍🔧 Creating the managed identity"
+az identity create --resource-group $RG_NAME --name $MANAGED_IDENTITY_NAME
 
-#3 Extract Git URL and Creds
-echo "👀 fetching deployment results"
-GIT_URL=$(echo $DEPLOYMENT_OUTPUT | jq -r '.gitUrl.value')
+echo "🧑‍🏭 Granting permissions"
+PRINCIPAL_ID=$(az identity show --resource-group $RG_NAME --name $MANAGED_IDENTITY_NAME --query principalId --output tsv)
+az role assignment create --assignee $PRINCIPAL_ID --role Contributor --scope /subscriptions/$(az account show --query id --output tsv)/resourceGroups/$RG_NAME
 
-
-CREDS=$(az webapp deployment list-publishing-credentials --name $WEBAPP_NAME --resource-group $RG_NAME)
-USERNAME=$(echo $CREDS | jq -r '.publishingUserName')
-PASSWORD=$(echo $CREDS | jq -r '.publishingPassword')
-
-# 4. Configure Git remote
-echo "🔧 Configuring Git remote..."
-git remote remove azure 2>/dev/null || true  # Remove if exists
-git remote add azure "https://${USERNAME}:${PASSWORD}@${WEBAPP_NAME}.scm.azurewebsites.net/${WEBAPP_NAME}.git"
-
-# 5. Deploy code
-echo "🚀 Pushing code..."
-git push azure deploy/azure:master 
-
-echo "✅ Deployment complete!"
-echo "🌐 App URL: https://${WEBAPP_NAME}.azurewebsites.net"
+echo "🏗️ deploying infrastructure"
+az deployment group create --resource-group $RG_NAME --template-file main.bicep
