@@ -11,7 +11,9 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2024-11-01' = {
   name: appServicePlanName
   location: location
   sku: {
-    name: 'F1'
+    name: 'B1'
+    tier: 'Basic'
+    capacity: 1
   }
   properties: {
     reserved: true
@@ -24,11 +26,11 @@ resource webApp 'Microsoft.Web/sites@2024-11-01' = {
   kind: 'app,linux'
   properties: {
     serverFarmId: appServicePlan.id
+    httpsOnly: true
     siteConfig: {
       linuxFxVersion: 'PYTHON|3.13'
-      alwaysOn: false
+      alwaysOn: true
       ftpsState: 'Disabled'
-      scmType: 'LocalGit'
       appCommandLine: 'bash startup.sh'
       appSettings: [
         {
@@ -49,14 +51,6 @@ resource webApp 'Microsoft.Web/sites@2024-11-01' = {
         }
       ]
     }
-  }
-}
-
-resource sites_django_todo_webapp_dev_name_scm 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2024-04-01' = {
-  parent: webApp
-  name: 'scm'
-  properties: {
-    allow: true
   }
 }
 
