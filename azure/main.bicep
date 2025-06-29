@@ -32,6 +32,8 @@ resource webApp 'Microsoft.Web/sites@2024-11-01' = {
       alwaysOn: true
       ftpsState: 'Disabled'
       appCommandLine: 'bash startup.sh'
+      httpLoggingEnabled: true
+      logsDirectorySizeLimit: 35
       appSettings: [
         {
           name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
@@ -48,6 +50,10 @@ resource webApp 'Microsoft.Web/sites@2024-11-01' = {
         {
           name: 'DEBUG'
           value: 'False'
+        }
+        {
+          name: 'DJANGO_ALLOWED_HOSTS'
+          value: 'django-todo-webapp-dev.azurewebsites.net,169.254.129.4'
         }
       ]
     }

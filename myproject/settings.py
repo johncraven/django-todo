@@ -26,14 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "your-fallback-key-for-local-dev")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "testserver",
-    "0.0.0.0",
-    ".azurewebsites.net",
-    "django-todo-webapp-dev.azurewebsites.net",
-]
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 CSRF_TRUSTED_ORIGINS = [
     "https://django-todo-webapp-dev.azurewebsites.net",
