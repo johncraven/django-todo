@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RG_NAME="rg-djang-todo-dev"
+RG_NAME="rg-django-todo-dev"
 LOCATION="eastus2"
 MANAGED_IDENTITY_NAME="django-todo-github-identity"
 
