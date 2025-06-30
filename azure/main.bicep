@@ -38,6 +38,18 @@ resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' =
     storage: {
       storageSizeGB: 32
     }
+    network: {
+      publicNetworkAccess: 'Enabled'
+    }
+  }
+}
+
+resource allowAzureServices 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2024-08-01' = {
+  parent: postgresServer
+  name: 'AllowAllAzureServices'
+  properties: {
+    startIpAddress: '0.0.0.0'
+    endIpAddress: '0.0.0.0'
   }
 }
 
