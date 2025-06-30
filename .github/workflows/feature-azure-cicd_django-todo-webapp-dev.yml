@@ -20,6 +20,8 @@ jobs:
           POSTGRES_PASSWORD: test_password
           POSTGRES_DB: test_db
           POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -33,6 +35,12 @@ jobs:
           python-version: '3.13'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
       - name: Run tests
         env: 
           POSTGRES_HOST: localhost
